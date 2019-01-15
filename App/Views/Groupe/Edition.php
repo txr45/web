@@ -5,7 +5,6 @@
  * $data (tmp)
  * $idGroupe
  * $doubleValidationActive
- * $responsablesGroupe
  * $baseURIApi
  */
 ?>
@@ -127,9 +126,9 @@ var optionsVue = {
     el: '#inner-content',
     data: {
         employes : {},
+        idGroupe : <?= $idGroupe ?>,
         responsables : {},
-        responsablesGroupe : <?= json_encode($responsablesGroupe) ?>,
-
+        grands_responsables : {},
         hasDoubleValidation: 'true' == "<?= $doubleValidationActive ? 'true' : 'false' ?>",
         infosGroupe : <?= json_encode($infosGroupe) ?>,
         dataForm : <?= json_encode($data) ?>,
@@ -161,8 +160,6 @@ var optionsVue = {
         },
         getEmployeDisabled : function (employe) {
             if (this.dataResponsableContains(employe) || this.dataGrandResponsableContains(employe)) {
-                    return true;
-            } else if (undefined != this.responsablesGroupe[employe['login']]) {
                 return true;
             }
 
@@ -251,34 +248,7 @@ var optionsVue = {
         }
     },
     created () {
-        var vm = this;
-        this.axios.get('/utilisateur')
-        .then((response) => {
-            if (typeof response.data != 'object') {
-                return;
-            }
-            const employes = response.data.data;
-            var fullUtilisateurs = new Array();
-            var responsables = new Array();
-            for (var i = 0; i < employes.length; ++i) {
-                var employe = employes[i];
-                employe.isDansGroupe = false;
-                fullUtilisateurs.push(employe);
-
-                if (employe.is_responsable) {
-                    responsables.push(employe);
-                }
-            }
-            // Finally hide loaders and show vars
-            document.getElementById('loader-bar-employe').classList.add('hidden');
-            document.getElementById('loader-bar-responsable').classList.add('hidden');
-            vm.employes = fullUtilisateurs;
-            vm.responsables = responsables;
-        })
-        .catch((error) => {
-            console.log(error.response);
-            console.error(error);
-        })
+        this.fillEmployes();
     },
     updated () {
         // Shows grand responsable groupe
