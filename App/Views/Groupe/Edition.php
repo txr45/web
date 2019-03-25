@@ -4,7 +4,6 @@
  * $infosGroupe
  * $data (tmp)
  * $idGroupe
- * $doubleValidationActive
  * $baseURIApi
  */
 ?>
@@ -17,7 +16,7 @@
                 <tr>
                     <th><b><?= _('Nom du groupe') ?></b></th>
                     <th><?= _('admin_groupes_libelle') ?> / <?= _('divers_comment_maj_1') ?></th>
-                    <th v-if="hasDoubleValidation"><?= _('admin_groupes_double_valid') ?></th>
+                    <th><?= _('admin_groupes_double_valid') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +27,7 @@
                     <td>
                         <input class="form-control" type="text" name="new_group_libelle" size="50" maxlength="250" :value="infosGroupe.comment">
                     </td>
-                    <td v-if="hasDoubleValidation">
+                    <td>
                         <select class="form-control" name="new_group_double_valid" id="select-double-validation" @change="showDivGroupeGrandResp('select-double-validation', 'groupe-grands-responsables');">
                             <option value="N" :selected="selected('N')">N</option>
                             <option value="Y" :selected="selected('Y')">Y</option>
@@ -129,7 +128,6 @@ var optionsVue = {
         idGroupe : <?= $idGroupe ?>,
         responsables : {},
         grands_responsables : {},
-        hasDoubleValidation: 'true' == "<?= $doubleValidationActive ? 'true' : 'false' ?>",
         infosGroupe : <?= json_encode($infosGroupe) ?>,
         dataForm : <?= json_encode($data) ?>,
         axios : instance
