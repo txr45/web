@@ -376,8 +376,6 @@ var optionsVue = {
     },
     created () {
         this.fillEmployes();
-        // TODO : actuellement :
-        // * toujours, le grand resp ne se remplit pas
     },
     updated () {
         // Shows grand responsable groupe
