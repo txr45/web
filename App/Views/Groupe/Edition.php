@@ -4,7 +4,6 @@
  * $infosGroupe
  * $data (tmp)
  * $idGroupe
- * $baseURIApi
  */
 ?>
 <div id="inner-content" class="form-group">
